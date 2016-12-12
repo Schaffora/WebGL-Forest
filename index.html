@@ -19,15 +19,15 @@
 		<!-- vertex shader -->
          <script id="shader-vs" type="x-shader/x-vertex">
             attribute vec3 aVertexPosition;
-			attribute vec4 aColor;
+			attribute vec2 aTextureCoord;
 			uniform mat4 uMVMatrix;
 			uniform mat4 uPMatrix;
-			varying vec4 vColor;
+			varying vec2 vTextureCoord;
 			
-			void main(void) {
-				gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-				vColor = aColor;
-			}     
+        void main(void) {
+			vTextureCoord = aTextureCoord;
+			gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        }
         </script>
 		
 		<!-- fragment shader -->
@@ -35,10 +35,13 @@
 			#ifdef GL_ES
 				precision highp float;
 			#endif
-				varying vec4 vColor;
-				void main(void) {
-				  gl_FragColor = vColor;
-				}
+			uniform sampler2D uColorTexture;
+			varying vec2 vTextureCoord;
+			void main(void) {
+				vec2 mapCoord = vec2(vTextureCoord.s, vTextureCoord.t);
+				vec4 texelColor = texture2D(uColorTexture, mapCoord);
+				gl_FragColor = texelColor.rgba;
+			}
         </script>
     </head>
 	

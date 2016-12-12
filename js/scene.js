@@ -14,6 +14,7 @@ var numerOfTrees=0;
 var MAXIMUM_TREE_NUMBER=100;
 var TREE_MAX_AGE=30;
 
+var texColorTab = new Array();
 
 /*Matrix Tools*/
 var yZoom=-2;
@@ -23,7 +24,7 @@ var zTranslate=0;
 
 
 
-var myVar = setInterval(function(){lifeCycle()}, 4000);
+//var myVar = setInterval(function(){lifeCycle()}, 4000);
 
 function lifeCycle()
 {
@@ -100,11 +101,12 @@ function changeProjection(){
 function initShaderParameters(prg)
 {
     prg.vertexPositionAttribute = glContext.getAttribLocation(prg, "aVertexPosition");
-	glContext.enableVertexAttribArray(prg.vertexPositionAttribute);
-	prg.colorAttribute 			= glContext.getAttribLocation(prg, "aColor");
-	glContext.enableVertexAttribArray(prg.colorAttribute);
-	prg.pMatrixUniform          = glContext.getUniformLocation(prg, 'uPMatrix');
-	prg.mvMatrixUniform         = glContext.getUniformLocation(prg, 'uMVMatrix');
+    glContext.enableVertexAttribArray(prg.vertexPositionAttribute);  
+    prg.textureCoordsAttribute  = glContext.getAttribLocation(prg, "aTextureCoord");
+	glContext.enableVertexAttribArray(prg.textureCoordsAttribute);
+	prg.uColorTexture 			= glContext.getUniformLocation(prg, "uColorTexture"); 
+    prg.pMatrixUniform          = glContext.getUniformLocation(prg, 'uPMatrix');
+    prg.mvMatrixUniform         = glContext.getUniformLocation(prg, 'uMVMatrix');
 }
 
 
@@ -114,12 +116,14 @@ function initScene()
 {
 	skys.push(new Sky());
 	fields.push(new Field());
-	treePossiblePositions=fields[0].getTreePossibility();
+	//treePossiblePositions=fields[0].getTreePossibility();
 	glContext.clearColor(0.2, 0.2, 0.2, 1.0);
     glContext.enable(glContext.DEPTH_TEST);
     glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
     glContext.viewport(0, 0, c_width, c_height);
 	changeProjection();
+	initTextureWithImage( "js/texture/field.png", texColorTab );
+	initTextureWithImage( "js/texture/sky.png", texColorTab );
 	renderLoop();
 }
 
@@ -134,19 +138,19 @@ function drawScene()
 	mat4.translate(mvMatrix, mvMatrix, [xTranslate, 0,0]);
 	mat4.translate(mvMatrix, mvMatrix, [0,0,zTranslate]);
 	
-	skys[0].initDraw();
+	skys[0].initDraw(texColorTab);
 	skys[0].drawAt(mvMatrix,0.0,0.0,-5.0);
 	skys[0].drawAt(mvMatrix,-1.0,0.0,-5.0);
 	
 	
-	fields[0].initDraw();
+	fields[0].initDraw(texColorTab);
 	fields[0].drawAt(mvMatrix,0.0,0.0,-5.0);
 	fields[0].drawAt(mvMatrix,-1.0,0.0,-5.0);
 	
-	for(var i=0;i<numerOfTrees;i++){
+	/*for(var i=0;i<numerOfTrees;i++){
 		trees[i].initDraw();
 		trees[i].drawAt(mvMatrix,0.0,0.0,-5.0);
-	}
+	}*/
 	
 }
 
@@ -156,5 +160,6 @@ function initWebGL()
     glContext = getGLContext('webgl-canvas');
     initProgram();
     initScene();
+	
 }
 

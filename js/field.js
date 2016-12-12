@@ -3,7 +3,8 @@ class Field{
 	{
 		this.vertexBuffer = null;
 		this.indexBuffer = null;
-		this.colorBuffer = null;
+		this.textCoordsBuffer = null;
+		this.texColorTab = new Array();
 		
 		this.treePossibilityPoints = [];
 		this.MAX_ITERATIONS=3;
@@ -18,12 +19,14 @@ class Field{
 		this.clearBuffers();	
 		this.indices = [];
 		this.vertices = [];
-		this.colors = [];
+		this.textCoords =[];
+
 		this.indicesOffset=0;	
 		
 		this.generateMidpoint(0.0,1.0,0.0, 1.0,1.0,0.0, 1.0,0.0,0.0, 0.0,0.0,0.0,0);	
+		
 		this.vertexBuffer = getVertexBufferWithVertices(this.vertices);
-        this.colorBuffer  = getVertexBufferWithVertices(this.colors);
+		this.textCoordsBuffer = getArrayBufferWithArray(this.textCoords);
         this.indexBuffer  = getIndexBufferWithIndices(this.indices);		
 	}
 	
@@ -77,16 +80,11 @@ class Field{
 	
 	getFieldVertices(Ax,Ay,Az,Bx,By,Bz,Cy,Cx,Cz,Dx,Dy,Dz,Ex,Ey,Ez,Fx,Fy,Fz,Gx,Gy,Gz,Hx,Hy,Hz,Ix,Iy,Iz)
 		{
-				for(i =0 ; i<24; i++)
+				for(i =0 ; i<8; i++)
 				{
-						if(Math.random()<=0.5)
-						{
-						this.colors.push(0.2,0.3,0.2,1.0);
-						}
-						else
-						{
-						this.colors.push(0.2,0.4,0.2,1.0);
-						}	
+					this.textCoords.push(0.0,0.0);
+					this.textCoords.push(0.0,1.0);
+					this.textCoords.push(1.0,1.0);
 				}
 				
 				/*Carré gauche haut */
@@ -122,21 +120,23 @@ class Field{
 		{
 			glContext.deleteBuffer(this.vertexBuffer);
 		}
-		if(this.colorBuffer != null)
+		if(this.textCoordsBuffer != null)
 		{
-			glContext.deleteBuffer(this.colorBuffer);
+			glContext.deleteBuffer(this.textCoordsBuffer);
 		}
 		if(this.indexBuffer != null)
 		{
 			glContext.deleteBuffer(this.indexBuffer);
 		}
 	}
-	initDraw()
+	initDraw(texColorTab)
 	{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.vertexBuffer);
 		glContext.vertexAttribPointer(prg.vertexPositionAttribute, 3, glContext.FLOAT, false, 0, 0);
-		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.colorBuffer);
-		glContext.vertexAttribPointer(prg.colorAttribute, 4, glContext.FLOAT, false, 0, 0);
+		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
+		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
+		glContext.activeTexture(glContext.TEXTURE0);		
+	    glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[0]);
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	}
 	

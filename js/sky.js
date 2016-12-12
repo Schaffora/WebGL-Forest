@@ -4,7 +4,7 @@ class Sky{
 	{
 		this.vertexBuffer = null;
 		this.indexBuffer = null;
-		this.colorBuffer = null;
+		this.textCoordsBuffer  = null;
 			
 		this.mvMatrix = mat4.create();
 		this.init();
@@ -16,11 +16,12 @@ class Sky{
 		this.clearBuffers();	
 		this.indices = [];
 		this.vertices = [];
-		this.colors = [];	
+		this.textCoords =[];
 		
 		this.generateSky();
+		
 		this.vertexBuffer = getVertexBufferWithVertices(this.vertices);
-        this.colorBuffer  = getVertexBufferWithVertices(this.colors);
+        this.textCoordsBuffer = getArrayBufferWithArray(this.textCoords);
         this.indexBuffer  = getIndexBufferWithIndices(this.indices);		
 	}
 	generateSky()
@@ -33,11 +34,13 @@ class Sky{
 		this.vertices.push(1.0,1.01,0.0);
 		this.vertices.push(1.0,1.01,0.5);
 		
-		for(var i=0; i<6;i++)
-		{
-			this.colors.push(0.1,0.1,0.4,1.0);
-		}
-		this.vertices.push(1.0,1.0,1.0);
+		for(var i =0 ; i<2; i++)
+				{
+					this.textCoords.push(0.0,0.0);
+					this.textCoords.push(0.0,1.0);
+					this.textCoords.push(1.0,1.0);
+				}
+		
 		this.indices.push(0,1,2,3,4,5);
 	}
 	clearBuffers()
@@ -46,21 +49,23 @@ class Sky{
 		{
 			glContext.deleteBuffer(this.vertexBuffer);
 		}
-		if(this.colorBuffer != null)
+		if(this.textCoordsBuffer != null)
 		{
-			glContext.deleteBuffer(this.colorBuffer);
+			glContext.deleteBuffer(this.textCoordsBuffer);
 		}
 		if(this.indexBuffer != null)
 		{
 			glContext.deleteBuffer(this.indexBuffer);
 		}
 	}
-	initDraw()
+	initDraw(texColorTab)
 	{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.vertexBuffer);
 		glContext.vertexAttribPointer(prg.vertexPositionAttribute, 3, glContext.FLOAT, false, 0, 0);
-		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.colorBuffer);
-		glContext.vertexAttribPointer(prg.colorAttribute, 4, glContext.FLOAT, false, 0, 0);
+		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
+		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
+		glContext.activeTexture(glContext.TEXTURE0);		
+	    glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[1]);		
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	}
 	

@@ -12,7 +12,7 @@ var treeUsedPositions=[];
 var numerOfTrees=0;
 
 var MAXIMUM_TREE_NUMBER=100;
-var TREE_MAX_AGE=30;
+var TREE_MAX_AGE=60;
 
 var texColorTab = new Array();
 
@@ -24,7 +24,7 @@ var zTranslate=0;
 
 
 
-//var myVar = setInterval(function(){lifeCycle()}, 4000);
+var myVar = setInterval(function(){lifeCycle()}, 4000);
 
 function lifeCycle()
 {
@@ -116,14 +116,18 @@ function initScene()
 {
 	skys.push(new Sky());
 	fields.push(new Field());
-	//treePossiblePositions=fields[0].getTreePossibility();
+	treePossiblePositions=fields[0].getTreePossibility();
 	glContext.clearColor(0.2, 0.2, 0.2, 1.0);
     glContext.enable(glContext.DEPTH_TEST);
     glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
     glContext.viewport(0, 0, c_width, c_height);
 	changeProjection();
-	initTextureWithImage( "js/texture/field.png", texColorTab );
+	initTextureWithImage( "js/texture/chess-field.png", texColorTab );
 	initTextureWithImage( "js/texture/sky.png", texColorTab );
+	for(var i=1; i<11; i++)
+	{
+		initTextureWithImage( "js/texture/tree_"+String(i)+".png", texColorTab );
+	}
 	renderLoop();
 }
 
@@ -147,10 +151,10 @@ function drawScene()
 	fields[0].drawAt(mvMatrix,0.0,0.0,-5.0);
 	fields[0].drawAt(mvMatrix,-1.0,0.0,-5.0);
 	
-	/*for(var i=0;i<numerOfTrees;i++){
-		trees[i].initDraw();
+	for(var i=0;i<numerOfTrees;i++){
+		trees[i].initDraw(texColorTab);
 		trees[i].drawAt(mvMatrix,0.0,0.0,-5.0);
-	}*/
+	}
 	
 }
 

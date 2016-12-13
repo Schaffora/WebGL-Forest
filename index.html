@@ -40,7 +40,12 @@
 			void main(void) {
 				vec2 mapCoord = vec2(vTextureCoord.s, vTextureCoord.t);
 				vec4 texelColor = texture2D(uColorTexture, mapCoord);
-				gl_FragColor = texelColor.rgba;
+				float alpha = 1.0;
+				if (texelColor.rgb == vec3(1.0,0.0,0.0))
+				{
+				discard; 
+				}
+				gl_FragColor = vec4(texelColor.rgb, alpha);
 			}
         </script>
     </head>

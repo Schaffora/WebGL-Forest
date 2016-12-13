@@ -26,22 +26,17 @@ class Sky{
 	}
 	generateSky()
 	{
-		this.vertices.push(0.0,1.01,0.5);
-		this.vertices.push(0.0,1.01,0.0);
-		this.vertices.push(1.0,1.01,0.5);
-		
 		this.vertices.push(0.0,1.01,0.0);
 		this.vertices.push(1.0,1.01,0.0);
+		this.vertices.push(0.0,1.01,0.5);
 		this.vertices.push(1.0,1.01,0.5);
 		
-		for(var i =0 ; i<2; i++)
-				{
-					this.textCoords.push(0.0,0.0);
-					this.textCoords.push(0.0,1.0);
-					this.textCoords.push(1.0,1.0);
-				}
+		this.textCoords.push(0.0,0.0);
+		this.textCoords.push(0.0,1.0);
+		this.textCoords.push(1.0,0.0);
+		this.textCoords.push(1.0,1.0);
 		
-		this.indices.push(0,1,2,3,4,5);
+		this.indices.push(0,1,2,3);
 	}
 	clearBuffers()
 	{
@@ -75,7 +70,7 @@ class Sky{
 		mat4.translate(this.mvMatrix, this.mvMatrix, vec3.fromValues(x, y, z));
 		mat4.multiply(this.mvMatrix, this.mvMatrix, mvMatrix);	
 		glContext.uniformMatrix4fv(prg.mvMatrixUniform, false, this.mvMatrix);
-		glContext.drawElements(glContext.TRIANGLES, this.indices.length, glContext.UNSIGNED_SHORT,0);
+		glContext.drawElements(glContext.TRIANGLE_STRIP, this.indices.length, glContext.UNSIGNED_SHORT,0);
 		
 	}
 }

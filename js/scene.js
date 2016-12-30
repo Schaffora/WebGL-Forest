@@ -12,7 +12,7 @@ var treeUsedPositions=[];
 var numerOfTrees=0;
 
 var MAXIMUM_TREE_NUMBER=100;
-var TREE_MAX_AGE=60;
+var TREE_MAX_AGE=40;
 
 var texColorTab = new Array();
 
@@ -21,10 +21,18 @@ var yZoom=-2;
 var zRotation = 300.0;
 var xTranslate=0;
 var zTranslate=0;
+var speed=1;
 
+var myVar = setInterval(function(){lifeCycle()}, 200*this.speed);
 
-
-var myVar = setInterval(function(){lifeCycle()}, 4000);
+function updateTextInput(val) {
+          this.speed=val; 
+		  clearInterval(myVar);
+		  myVar = setInterval(function(){lifeCycle()}, 200*this.speed);
+        }
+function updateAge(val) {
+          this.TREE_MAX_AGE=val; 
+        }
 
 function lifeCycle()
 {
@@ -117,14 +125,14 @@ function initScene()
 	skys.push(new Sky());
 	fields.push(new Field());
 	treePossiblePositions=fields[0].getTreePossibility();
-	glContext.clearColor(0.2, 0.2, 0.2, 1.0);
+	glContext.clearColor(0.0, 0.0, 0.0, 1.0);
     glContext.enable(glContext.DEPTH_TEST);
     glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
     glContext.viewport(0, 0, c_width, c_height);
 	changeProjection();
 	initTextureWithImage( "js/texture/chess-field.png", texColorTab );
-	initTextureWithImage( "js/texture/sky.png", texColorTab );
-	for(var i=1; i<11; i++)
+	initTextureWithImage( "js/texture/sky_1.png", texColorTab );
+	for(var i=1; i<16; i++)
 	{
 		initTextureWithImage( "js/texture/tree_"+String(i)+".png", texColorTab );
 	}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+	
         <meta charset="utf-8" />
         <link rel="stylesheet" href="css/stylesheet.css">
 		
@@ -52,13 +53,31 @@
 	
 	<!-- initialize webgl onload -->
     <body onload="initWebGL()">
-		<script>
-			displayTitle("Mini Projet - Paysage forêt", 1,1,1,1,1,1,1);
-		</script>
-		<br>
 		<!-- webgl canvas -->
-		<canvas id="webgl-canvas" width="500" height="500">
-		  HTML5 is not supported
-		</canvas>
-		 </body>
+		<div class="parentDiv">
+			
+			<div class="leftCanvasDiv">
+				<canvas id="webgl-canvas" width="550" height="190" align="center">
+				  HTML5 is not supported
+				</canvas>
+			</div>
+			
+			<div class="rightFormDiv">
+				<div class="customForm">
+					<p align="center"><b>Forest Propreties</b></p>
+					<form>
+					<label for="speed">Growing speed</label>
+					<input class="customSlider" type="range" value="1" min="1" max="10" steps="1" id="speed" onchange="updateTextInput(this.value);" ></br>
+					<label for="age">Tree Age</label>
+					<input class="customSlider" type="range" value="40" min="20" max="60" steps="1" id="age" onchange="updateAge(this.value);" ></br>
+					</form>
+				</div>	
+			</div>
+		</div>
+		
+		<div class="bottomFormDiv">
+			<p>More Options</p>
+			<p>More Options</p>
+		</div>
+	</body>
 </html>

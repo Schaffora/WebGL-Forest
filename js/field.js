@@ -8,7 +8,7 @@ class Field{
 		
 		this.treePossibilityPoints = [];
 		this.MAX_ITERATIONS=3;
-		this.DEPTH =2;
+		this.DEPTH =1.4;
 		
 		this.mvMatrix = mat4.create();
 		this.init();

@@ -2,10 +2,10 @@
 1 -> Field spring
 2 -> Field autumn
 3 -> Field winter
-4 -> Sky day summer/spring
-5 -> Sky night summer/spring
-6 -> Sky day winter/autumn
-7 -> Sky night winter/autumn
+4 -> Sky day summer/spring/autumn
+5 -> Sky night summer/spring/autumn
+6 -> Sky day winter
+7 -> Sky night winter
 8 -> Coniferous 1 Summer/ Spring /Automn
 9 -> Coniferous 2 Summer/ Spring /Automn
 10 -> Coniferous 3 Summer/ Spring /Automn

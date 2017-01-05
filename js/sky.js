@@ -1,15 +1,17 @@
 class Sky{
 
-	constructor()
+	constructor(wallOrientation)
 	{
 		this.vertexBuffer = null;
 		this.indexBuffer = null;
 		this.textCoordsBuffer  = null;
 			
 		this.mvMatrix = mat4.create();
+		this.wallOrientationValue=wallOrientation;
 		this.init();
-	}
 		
+		
+	}
 	init()
 	{	
 	
@@ -26,10 +28,23 @@ class Sky{
 	}
 	generateSky()
 	{
-		this.vertices.push(0.0,1.01,0.0);
-		this.vertices.push(1.0,1.01,0.0);
-		this.vertices.push(0.0,1.01,0.5);
-		this.vertices.push(1.0,1.01,0.5);
+		if(this.wallOrientationValue==1)
+		{
+			this.vertices.push(0.0,1.0,0.0);
+			this.vertices.push(1.0,1.0,0.0);
+			this.vertices.push(0.0,1.0,0.5);
+			this.vertices.push(1.0,1.0,0.5);
+		}
+		else
+		{
+			this.vertices.push(0.0,0.0,0.0);
+			this.vertices.push(0.0,1.0,0.0);
+			this.vertices.push(0.0,0.0,0.5);
+			this.vertices.push(0.0,1.0,0.5);
+		}
+		
+		
+		
 		
 		this.textCoords.push(0.0,0.0);
 		this.textCoords.push(0.0,1.0);

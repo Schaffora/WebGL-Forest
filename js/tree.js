@@ -5,7 +5,7 @@ class Tree{
 			this.indexBuffer = null;
 			this.textCoordsBuffer = null;
 			this.texColorTab = new Array();
-			this.Age=0;
+			this.age=0;
 			this.Ex=x;
 			this.Ey=y;
 			this.Ez=z;
@@ -38,11 +38,11 @@ class Tree{
 	}
 	incAge()
 	{
-		this.Age+=1;
+		this.age+=1;
 	}
 	getAge()
 	{
-		return this.Age;
+		return this.age;
 	}	
 	createTree(Ex,Ey,Ez,treeType,userHeight)
 		{
@@ -110,63 +110,63 @@ class Tree{
 		glContext.activeTexture(glContext.TEXTURE0);
 		var evolutionStep= this.maxAge/15;
 		
-		if(this.Age<1*evolutionStep)
+		if(this.age<1*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[2+(15*this.type)]);
 		}
-		if(this.Age>1*evolutionStep && this.Age<=2*evolutionStep)
+		if(this.age>1*evolutionStep && this.age<=2*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[3+(15*this.type)]);
 		}
-		if(this.Age>2*evolutionStep && this.Age<=3*evolutionStep)
+		if(this.age>2*evolutionStep && this.age<=3*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[4+(15*this.type)]);
 		}
-		if(this.Age>3*evolutionStep && this.Age<=4*evolutionStep)
+		if(this.age>3*evolutionStep && this.age<=4*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[5+(15*this.type)]);
 		}
-		if(this.Age>4*evolutionStep && this.Age<=5*evolutionStep)
+		if(this.age>4*evolutionStep && this.age<=5*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[6+(15*this.type)]);
 		}
-		if(this.Age>5*evolutionStep && this.Age<=6*evolutionStep)
+		if(this.age>5*evolutionStep && this.age<=6*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[7+(15*this.type)]);
 		}
-		if(this.Age>6*evolutionStep && this.Age<=7*evolutionStep)
+		if(this.age>6*evolutionStep && this.age<=7*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[8+(15*this.type)]);
 		}
-		if(this.Age>7*evolutionStep && this.Age<=8*evolutionStep)
+		if(this.age>7*evolutionStep && this.age<=8*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[9+(15*this.type)]);
 		}
-		if(this.Age>8*evolutionStep && this.Age<=9*evolutionStep)
+		if(this.age>8*evolutionStep && this.age<=9*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[10+(15*this.type)]);
 		}
-		if(this.Age>9*evolutionStep && this.Age<=10*evolutionStep)
+		if(this.age>9*evolutionStep && this.age<=10*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[11+(15*this.type)]);
 		}
-		if(this.Age>10*evolutionStep && this.Age<=11*evolutionStep)
+		if(this.age>10*evolutionStep && this.age<=11*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[12+(15*this.type)]);
 		}
-		if(this.Age>11*evolutionStep && this.Age<=12*evolutionStep)
+		if(this.age>11*evolutionStep && this.age<=12*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[13+(15*this.type)]);
 		}
-		if(this.Age>12*evolutionStep && this.Age<=13*evolutionStep)
+		if(this.age>12*evolutionStep && this.age<=13*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[14+(15*this.type)]);
 		}
-		if(this.Age>13*evolutionStep && this.Age<=14*evolutionStep)
+		if(this.age>13*evolutionStep && this.age<=14*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[15+(15*this.type)]);
 		}
-		if(this.Age>14*evolutionStep)
+		if(this.age>14*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[16+(15*this.type)]);
 		}

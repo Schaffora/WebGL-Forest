@@ -7,7 +7,7 @@ class Field{
 		this.texColorTab = new Array();
 		
 		this.treePossibilityPoints = [];
-		this.MAX_ITERATIONS=4;
+		this.MD_POINT_MAX_ITERATIONS=4;
 		this.DEPTH =7;
 		
 		this.mvMatrix = mat4.create();
@@ -39,7 +39,6 @@ class Field{
 		
 			var Ex=Ax+(Cx-Ax)/2.0;
 			var Ey=Cy+(Ay-Cy)/2.0;
-			console.log(Az);
 			if(Az>0.015 && Az <0.03)
 			{
 				var Ez=Az+0.01;
@@ -65,11 +64,11 @@ class Field{
 			var Iy=Dy+(Ay-Dy)/2.0;
 			var Iz=(Math.abs(Dz-Az));
 			
-			if(iterations==this.MAX_ITERATIONS)
+			if(iterations==this.MD_POINT_MAX_ITERATIONS)
 			{	
 				this.getFieldVertices(Ax,Ay,Az,Bx,By,Bz,Cy,Cx,Cz,Dx,Dy,Dz,Ex,Ey,Ez,Fx,Fy,Fz,Gx,Gy,Gz,Hx,Hy,Hz,Ix,Iy,Iz);
 			}	
-			if (iterations < this.MAX_ITERATIONS) {	
+			if (iterations < this.MD_POINT_MAX_ITERATIONS) {	
 				iterations=iterations+1;
 				this.generateMidpoint(Ax,Ay,Az,Fx,Fy,Fz,Ex,Ey,Ez,Ix,Iy,Iz,iterations);
 				this.generateMidpoint(Fx,Fy,Fz,Bx,By,Bz,Gx,Gy,Gz, Ex,Ey,Ez,iterations);

@@ -57,7 +57,7 @@
 		<div class="parentDiv">
 			
 			<div class="leftCanvasDiv">
-				<canvas id="webgl-canvas" width="550" height="190" align="center">
+				<canvas id="webgl-canvas" width="400%" height="200%" align="center">
 				  HTML5 is not supported
 				</canvas>
 			</div>
@@ -66,10 +66,12 @@
 				<div class="customForm">
 					<p align="center"><b>Forest Propreties</b></p>
 					<form>
-					<label for="speed">Growing speed</label>
-					<input class="customSlider" type="range" value="1" min="1" max="10" steps="1" id="speed" onchange="updateTextInput(this.value);" ></br>
-					<label for="age">Tree Age</label>
-					<input class="customSlider" type="range" value="40" min="20" max="60" steps="1" id="age" onchange="updateAge(this.value);" ></br>
+					<label for="speed">Tree growing speed</label>
+					<input class="customSlider" type="range" value="5" min="1" max="10" steps="1" id="speed" onchange="updateTextInput(this.value);" ></br>
+					<label for="growingProb">Tree growing probability</label>
+					<input class="customSlider" type="range" value="3" min="0" max="5" steps="1" id="growingProb" onchange="updateProbability(this.value);" ></br>
+					<label for="treeHeight">Tree minimum height</label>
+					<input class="customSlider" type="range" value="10" min="5" max="30" steps="1" id="treeHeight" onchange="updateTreeHeight(this.value);" ></br>
 					</form>
 				</div>	
 			</div>

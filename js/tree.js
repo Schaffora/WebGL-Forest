@@ -13,6 +13,8 @@ class Tree{
 			this.mvMatrix = mat4.create();
 			this.init();
 			this.type=0;
+			this.maxAge=0;
+
 	}
 	
 	init()
@@ -26,6 +28,10 @@ class Tree{
 	{
 		return this.ID;
 	}
+	setMaxAge(treeMaxAge)
+	{
+		this.maxAge=treeMaxAge;
+	}
 	setID(newID)
 	{
 		this.ID=newID;
@@ -38,28 +44,25 @@ class Tree{
 	{
 		return this.Age;
 	}	
-	createTree(Ex,Ey,Ez)
+	createTree(Ex,Ey,Ez,treeType,userHeight)
 		{
-			
-			var Height=parseInt((Math.random()*6+ 10));
+
+			this.type=treeType;
+			var finalHeight=parseInt((Math.random()*6)) + parseInt(userHeight/1.5);
 			
 			this.vertices.push((Ex-0.045),Ey,Ez);
 			this.vertices.push((Ex+0.045),Ey,Ez);
-			this.vertices.push((Ex-0.045),Ey,Ez+Height/100);
+			this.vertices.push((Ex-0.045),Ey,Ez+finalHeight/100);
 			this.vertices.push((Ex+0.045),Ey,Ez);
-			this.vertices.push((Ex-0.045),Ey,Ez+Height/100);
-			this.vertices.push((Ex+0.045),Ey,Ez+Height/100);
+			this.vertices.push((Ex-0.045),Ey,Ez+finalHeight/100);
+			this.vertices.push((Ex+0.045),Ey,Ez+finalHeight/100);
 			
 			this.vertices.push(Ex,(Ey-0.045),Ez);
 			this.vertices.push(Ex,(Ey+0.045),Ez);
-			this.vertices.push(Ex,(Ey-0.045),Ez+Height/100);
+			this.vertices.push(Ex,(Ey-0.045),Ez+finalHeight/100);
 			this.vertices.push(Ex,(Ey+0.045),Ez);
-			this.vertices.push(Ex,(Ey-0.045),Ez+Height/100);
-			this.vertices.push(Ex,(Ey+0.045),Ez+Height/100);
-			
-			
-		
-			
+			this.vertices.push(Ex,(Ey-0.045),Ez+finalHeight/100);
+			this.vertices.push(Ex,(Ey+0.045),Ez+finalHeight/100);
 			
 			for(var i=0; i<2;i++)	
 			{
@@ -105,70 +108,67 @@ class Tree{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
 		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
 		glContext.activeTexture(glContext.TEXTURE0);
+		var evolutionStep= this.maxAge/15;
 		
-		if(this.Age==0)
+		if(this.Age<1*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[2+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[2+(15*this.type)]);
 		}
-		if(this.Age==1)
+		if(this.Age>1*evolutionStep && this.Age<=2*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[2+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[3+(15*this.type)]);
 		}
-		if(this.Age>1 && this.Age<=3)
+		if(this.Age>2*evolutionStep && this.Age<=3*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[3+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[4+(15*this.type)]);
 		}
-		if(this.Age>3 && this.Age<=5)
+		if(this.Age>3*evolutionStep && this.Age<=4*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[4+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[5+(15*this.type)]);
 		}
-		if(this.Age>5 && this.Age<=10)
+		if(this.Age>4*evolutionStep && this.Age<=5*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[5+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[6+(15*this.type)]);
 		}
-		if(this.Age>10 && this.Age<=15)
+		if(this.Age>5*evolutionStep && this.Age<=6*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[6+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[7+(15*this.type)]);
 		}
-		if(this.Age>15 && this.Age<=20)
+		if(this.Age>6*evolutionStep && this.Age<=7*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[7+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[8+(15*this.type)]);
 		}
-		if(this.Age>20 && this.Age<=25)
+		if(this.Age>7*evolutionStep && this.Age<=8*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[8+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[9+(15*this.type)]);
 		}
-		if(this.Age>25 && this.Age<=30)
+		if(this.Age>8*evolutionStep && this.Age<=9*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[9+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[10+(15*this.type)]);
 		}
-		if(this.Age>30 && this.Age<=35)
+		if(this.Age>9*evolutionStep && this.Age<=10*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[10+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[11+(15*this.type)]);
 		}
-		if(this.Age>35 && this.Age<=50)
+		if(this.Age>10*evolutionStep && this.Age<=11*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[11+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[12+(15*this.type)]);
 		}
-		if(this.Age>50 && this.Age<=52)
+		if(this.Age>11*evolutionStep && this.Age<=12*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[12+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[13+(15*this.type)]);
 		}
-		if(this.Age>52 && this.Age<=54)
+		if(this.Age>12*evolutionStep && this.Age<=13*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[13+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[14+(15*this.type)]);
 		}
-		if(this.Age>54 && this.Age<=56)
+		if(this.Age>13*evolutionStep && this.Age<=14*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[14+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[15+(15*this.type)]);
 		}
-		if(this.Age>56 && this.Age <=58)
+		if(this.Age>14*evolutionStep)
 		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[15+(17*this.type)]);
-		}
-		if(this.Age>58 && this.Age <=60)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[16+(17*this.type)]);
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[16+(15*this.type)]);
 		}
 	   		
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);

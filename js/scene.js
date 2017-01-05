@@ -10,52 +10,93 @@ var treePossiblePositions=[];
 var treeUsedPositions=[];
 
 var numerOfTrees=0;
+var season =0;
+var dayNight=0;
 
-var MAXIMUM_TREE_NUMBER=100;
-var TREE_MAX_AGE=40;
+var MAXIMUM_TREE_NUMBER=400;
+var TREE_MAX_AGE=200;
+
+var userGrowingSpeed=5;
+var userTreeGrowProb=3;
+var userTreeHeight=10;
 
 var texColorTab = new Array();
 
 /*Matrix Tools*/
-var yZoom=-2;
+var yZoom=-5.5;
 var zRotation = 300.0;
-var xTranslate=0;
-var zTranslate=0;
-var speed=1;
+var xTranslate=-0.5;
+var zTranslate=0.6;
+var xRotation =0.0;
 
-var myVar = setInterval(function(){lifeCycle()}, 200*this.speed);
+
+var evolutionCycle = setInterval(function(){lifeCycle()}, 2000/this.userGrowingSpeed);
 
 function updateTextInput(val) {
-          this.speed=val; 
-		  clearInterval(myVar);
-		  myVar = setInterval(function(){lifeCycle()}, 200*this.speed);
+          this.userGrowingSpeed=val; 
+		  clearInterval(evolutionCycle);
+		  evolutionCycle = setInterval(function(){lifeCycle()}, 2000/this.userGrowingSpeed);
         }
-function updateAge(val) {
-          this.TREE_MAX_AGE=val; 
+function updateTreeHeight(valHeight) {
+          this.userTreeHeight=valHeight; 
+        }
+function updateProbability(valProb) {
+          this.userTreeGrowProb=valProb; 
         }
 
 function lifeCycle()
 {
 	if(numerOfTrees<MAXIMUM_TREE_NUMBER)
 	{
-		/* getTreeProbabilityAtPoint() */
-		/* If tree probability > 0.5*/
+		var pos= Math.floor(Math.random() * 400) + 1;
+		//console.log(treeUsedPositions);
 		
-		var pos= Math.floor(Math.random() * 100) + 1;
-		console.log(treeUsedPositions);
 		if(treeUsedPositions.includes(pos)==false)
 		{
-			trees.push(new Tree());
-			trees[numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005);
-			trees[numerOfTrees].setID(pos);
-			numerOfTrees++;
-			treeUsedPositions.push(pos);			
+			var positionProb = 0;
+			if(treeUsedPositions.includes(pos-1)&& treeUsedPositions.includes(pos+1))
+			{
+				positionProb = 0.5;
+			}
+			else if(treeUsedPositions.includes(pos-1))
+			{
+				positionProb = 0.25;
+			}
+			else if(treeUsedPositions.includes(pos+1))
+			{
+				positionProb = 0.25;
+			}
+			else
+			{
+				positionProb = 0;
+			}
+			var randFactorProb = Math.random();
+			var finalProb = randFactorProb+positionProb+(userTreeGrowProb/10);
+			if(finalProb<0.9)
+			{
+				trees.push(new Tree());
+				var leafy = Math.random();
+				var coniferous = Math.random();
+				if(leafy>coniferous)
+				{
+					trees[numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,1,this.userTreeHeight);
+				}
+				else
+				{
+					trees[numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,0,this.userTreeHeight);
+				}
+				
+				trees[numerOfTrees].setID(pos);
+				trees[numerOfTrees].setMaxAge(TREE_MAX_AGE);
+				numerOfTrees++;
+				treeUsedPositions.push(pos);
+			}	
 		}
+		
 		for(var i=0;i<numerOfTrees;i++)
 		{
 			if(trees[i].getAge()>=TREE_MAX_AGE)
 			{
-				
 				treeUsedPositions=treeUsedPositions.filter(function(e) { return e !== trees[i].getID()});
 				trees.splice(i,1);
 				i--;
@@ -69,7 +110,7 @@ function lifeCycle()
 	}
 	else
 	{
-		clearInterval(myVar);
+		clearInterval(evolutionCycle);
 	}
 	
 }
@@ -94,6 +135,12 @@ window.onkeydown = checkKey;
                     break;
 				case 40:
                     zTranslate+=0.05;
+					break;
+				case 39:
+                    xRotation-=0.5;
+					break;
+				case 37:
+                    xRotation+=0.5;
                     break;
                 default:
 				//console.log(ev.keyCode);
@@ -130,11 +177,15 @@ function initScene()
     glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
     glContext.viewport(0, 0, c_width, c_height);
 	changeProjection();
-	initTextureWithImage( "js/texture/chess-field.png", texColorTab );
+	initTextureWithImage( "js/texture/chess-field-snow.png", texColorTab );
 	initTextureWithImage( "js/texture/sky_1.png", texColorTab );
 	for(var i=1; i<16; i++)
 	{
 		initTextureWithImage( "js/texture/tree_"+String(i)+".png", texColorTab );
+	}
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/leafy_tree_"+String(i)+".png", texColorTab );
 	}
 	renderLoop();
 }
@@ -146,18 +197,18 @@ function drawScene()
 	glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
 	mat4.identity(mvMatrix);
 	mat4.rotate(mvMatrix, mvMatrix, zRotation/10, [1.0,0.0,0.0]);
+	mat4.rotate(mvMatrix, mvMatrix, xRotation/10, [0.0,0.0,1.0]);
+	//mat4.rotate(mvMatrix,mvMatrix,Math.PI / 180*xRotation);
 	mat4.translate(mvMatrix, mvMatrix, [0, yZoom,0]);
 	mat4.translate(mvMatrix, mvMatrix, [xTranslate, 0,0]);
 	mat4.translate(mvMatrix, mvMatrix, [0,0,zTranslate]);
 	
 	skys[0].initDraw(texColorTab);
 	skys[0].drawAt(mvMatrix,0.0,0.0,-5.0);
-	skys[0].drawAt(mvMatrix,-1.0,0.0,-5.0);
 	
 	
 	fields[0].initDraw(texColorTab);
 	fields[0].drawAt(mvMatrix,0.0,0.0,-5.0);
-	fields[0].drawAt(mvMatrix,-1.0,0.0,-5.0);
 	
 	for(var i=0;i<numerOfTrees;i++){
 		trees[i].initDraw(texColorTab);

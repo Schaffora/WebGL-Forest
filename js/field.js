@@ -7,8 +7,8 @@ class Field{
 		this.texColorTab = new Array();
 		
 		this.treePossibilityPoints = [];
-		this.MAX_ITERATIONS=3;
-		this.DEPTH =1.4;
+		this.MAX_ITERATIONS=4;
+		this.DEPTH =7;
 		
 		this.mvMatrix = mat4.create();
 		this.init();
@@ -39,13 +39,14 @@ class Field{
 		
 			var Ex=Ax+(Cx-Ax)/2.0;
 			var Ey=Cy+(Ay-Cy)/2.0;
-			if(Az>0.1 && Az <0.3)
+			console.log(Az);
+			if(Az>0.015 && Az <0.03)
 			{
-				var Ez=Az+0.03;
+				var Ez=Az+0.01;
 			}
 			else
 			{
-				var Ez=Math.random()*Math.random()*(this.DEPTH/100)*3+0.05;
+				var Ez=Math.random()*Math.random()*(this.DEPTH/1000)*3+0.015;
 			}
 
 			var Fx=Ax+((Bx-Ax)/2.0);

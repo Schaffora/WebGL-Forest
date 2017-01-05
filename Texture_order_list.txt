@@ -1,0 +1,94 @@
+0 -> Field summer
+1 -> Field spring
+2 -> Field autumn
+3 -> Field winter
+4 -> Sky day summer/spring
+5 -> Sky night summer/spring
+6 -> Sky day winter/autumn
+7 -> Sky night winter/autumn
+8 -> Coniferous 1 Summer/ Spring /Automn
+9 -> Coniferous 2 Summer/ Spring /Automn
+10 -> Coniferous 3 Summer/ Spring /Automn
+11 -> Coniferous 4 Summer/ Spring /Automn
+12 -> Coniferous 5 Summer/ Spring /Automn
+13 -> Coniferous 6 Summer/ Spring /Automn
+14 -> Coniferous 7 Summer/ Spring /Automn
+15 -> Coniferous 8 Summer/ Spring /Automn
+16 -> Coniferous 9 Summer/ Spring /Automn
+17 -> Coniferous 10 Summer/ Spring /Automn
+18 -> Coniferous 11 Summer/ Spring /Automn
+19 -> Coniferous 12 Summer/ Spring /Automn
+20 -> Coniferous 13 Summer/ Spring /Automn
+21 -> Coniferous 14 Summer/ Spring /Automn
+22 -> Coniferous 15 Summer/ Spring /Automn
+23 -> Coniferous 1 winter
+24 -> Coniferous 2 winter
+25 -> Coniferous 3 winter
+26 -> Coniferous 4 winter
+27 -> Coniferous 5 winter
+28 -> Coniferous 6 winter
+29 -> Coniferous 7 winter
+30 -> Coniferous 8 winter
+31 -> Coniferous 9 winter
+32 -> Coniferous 10 winter
+33 -> Coniferous 11 winter
+34 -> Coniferous 12 winter
+35 -> Coniferous 13 winter
+36 -> Coniferous 14 winter
+37 -> Coniferous 15 winter
+38 -> Leafy 1 Summer/Spring
+39 -> Leafy 2 Summer/Spring
+40 -> Leafy 3 Summer/Spring
+41 -> Leafy 4 Summer/Spring
+42 -> Leafy 5 Summer/Spring
+43 -> Leafy 6 Summer/Spring
+44 -> Leafy 7 Summer/Spring
+45 -> Leafy 8 Summer/Spring
+46 -> Leafy 9 Summer/Spring
+47 -> Leafy 10 Summer/Spring
+48 -> Leafy 11 Summer/Spring
+49 -> Leafy 12 Summer/Spring
+50 -> Leafy 13 Summer/Spring
+51 -> Leafy 14 Summer/Spring
+52 -> Leafy 15 Summer/Spring
+53 -> Leafy 1 Autumn 
+54 -> Leafy 2 Autumn 
+55 -> Leafy 3 Autumn 
+56 -> Leafy 4 Autumn 
+57 -> Leafy 5 Autumn 
+58 -> Leafy 6 Autumn 
+59 -> Leafy 7 Autumn 
+60 -> Leafy 8 Autumn 
+61 -> Leafy 9 Autumn 
+62 -> Leafy 10 Autumn 
+63 -> Leafy 11 Autumn 
+64 -> Leafy 12 Autumn 
+65 -> Leafy 13 Autumn 
+66 -> Leafy 14 Autumn 
+67 -> Leafy 15 Autumn
+68 -> Leafy 1 Winter
+69 -> Leafy 1 Winter 
+70 -> Leafy 1 Winter 
+71 -> Leafy 2 Winter 
+72 -> Leafy 3 Winter 
+73 -> Leafy 4 Winter 
+74 -> Leafy 5 Winter 
+75 -> Leafy 6 Winter 
+76 -> Leafy 7 Winter 
+77 -> Leafy 8 Winter 
+78 -> Leafy 9 Winter 
+79 -> Leafy 10 Winter 
+80 -> Leafy 11 Winter 
+81 -> Leafy 12 Winter 
+82 -> Leafy 13 Winter 
+83 -> Leafy 14 Winter 
+84 -> Leafy 15 Winter 
+85 -> House Summer/Spring
+86 -> House Autumn
+87 -> House Winter
+
+ 
+
+
+
+

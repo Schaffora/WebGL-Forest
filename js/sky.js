@@ -9,8 +9,12 @@ class Sky{
 		this.mvMatrix = mat4.create();
 		this.wallOrientationValue=wallOrientation;
 		this.init();
-		
-		
+		this.season=0;
+		this.dayNight=0;
+	}
+	setSeason(newValue)
+	{
+		this.season=newValue;
 	}
 	init()
 	{	
@@ -74,12 +78,34 @@ class Sky{
 		glContext.vertexAttribPointer(prg.vertexPositionAttribute, 3, glContext.FLOAT, false, 0, 0);
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
 		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
-		glContext.activeTexture(glContext.TEXTURE0);		
-	    glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[1]);		
+		glContext.activeTexture(glContext.TEXTURE0);
+		if( this.dayNight==0)
+		{
+			if(this.season==0 ||this.season==1 || this.season==2  )
+			{
+				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[4]);
+			}
+			else
+			{
+				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[6]);
+			}
+		}
+		else
+		{
+			if(this.season==0 ||this.season==1 || this.season==2  )
+			{
+				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[5]);
+			}
+			else
+			{
+				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[7]);
+			}
+		}			
+	  		
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	}
 	
-		drawAt(mvMatrix, x, y, z)
+	drawAt(mvMatrix, x, y, z)
 	{
 		mat4.identity(this.mvMatrix);
 		mat4.translate(this.mvMatrix, this.mvMatrix, vec3.fromValues(x, y, z));

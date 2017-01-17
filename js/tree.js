@@ -12,17 +12,21 @@ class Tree{
 			this.ID=-1;
 			this.mvMatrix = mat4.create();
 			this.init();
-			this.type=0;
 			this.maxAge=0;
+			this.type=0;
+			this.season=0;
 
 	}
-	
 	init()
 	{	
 		this.clearBuffers();	
 		this.indices = [];
 		this.vertices = [];
 		this.textCoords =[];
+	}
+	setSeason(newValue)
+	{
+		this.season=newValue;
 	}
 	getID()
 	{
@@ -108,73 +112,65 @@ class Tree{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
 		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
 		glContext.activeTexture(glContext.TEXTURE0);
-		var evolutionStep= this.maxAge/15;
+		if(this.type==0)
+		{
+			if(this.season==0 || this.season==1 ||this.season==2)
+			{
+				this.setTexture(8);
+			}
+			else
+			{
+				setTexture(23);
+			}
+		}
+		else
+		{
+			if(this.season==0)
+			{
+				this.setTexture(38);
+			}
+			if(this.season==1)
+			{
+				this.setTexture(53);
+			}
+			if(this.season==2)
+			{
+				this.setTexture(68);
+			}
+			if(this.season==3)
+			{
+				this.setTexture(83);
+			}
+		}
 		
-		if(this.age<1*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[2+(15*this.type)]);
-		}
-		if(this.age>1*evolutionStep && this.age<=2*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[3+(15*this.type)]);
-		}
-		if(this.age>2*evolutionStep && this.age<=3*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[4+(15*this.type)]);
-		}
-		if(this.age>3*evolutionStep && this.age<=4*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[5+(15*this.type)]);
-		}
-		if(this.age>4*evolutionStep && this.age<=5*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[6+(15*this.type)]);
-		}
-		if(this.age>5*evolutionStep && this.age<=6*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[7+(15*this.type)]);
-		}
-		if(this.age>6*evolutionStep && this.age<=7*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[8+(15*this.type)]);
-		}
-		if(this.age>7*evolutionStep && this.age<=8*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[9+(15*this.type)]);
-		}
-		if(this.age>8*evolutionStep && this.age<=9*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[10+(15*this.type)]);
-		}
-		if(this.age>9*evolutionStep && this.age<=10*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[11+(15*this.type)]);
-		}
-		if(this.age>10*evolutionStep && this.age<=11*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[12+(15*this.type)]);
-		}
-		if(this.age>11*evolutionStep && this.age<=12*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[13+(15*this.type)]);
-		}
-		if(this.age>12*evolutionStep && this.age<=13*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[14+(15*this.type)]);
-		}
-		if(this.age>13*evolutionStep && this.age<=14*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[15+(15*this.type)]);
-		}
-		if(this.age>14*evolutionStep)
-		{
-		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[16+(15*this.type)]);
-		}
+		
 	   		
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	}
-	
-		drawAt(mvMatrix, x, y, z)
+	setTexture(index)
+	{
+		var evolutionStep= this.maxAge/15;
+		
+		for(var i=1;i<13;i++)
+		{
+			if(this.age>(i*evolutionStep) && this.age<=(i+1)*evolutionStep)
+			{
+				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[i+index]);
+				console.log(i+index);
+			}
+		}
+		
+		if(this.age<1*evolutionStep)
+		{
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[index]);
+		}
+		
+		if(this.age>14*evolutionStep)
+		{
+		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[index+14]);
+		}
+	}
+	drawAt(mvMatrix, x, y, z)
 	{
 		mat4.identity(this.mvMatrix);
 		mat4.translate(this.mvMatrix, this.mvMatrix, vec3.fromValues(x, y, z));

@@ -10,6 +10,23 @@ body {
 	margin: 0px;
 	padding: 0px 0px 25px 0px;
 }
+.seasons{
+	  font-size: 80%;
+	  
+}
+.seasons br{
+	 display: block;
+    margin-top: 0%;
+}
+.title{
+	font-size: 120%;
+}
+.checkboxes input {
+  vertical-align: middle;
+}
+.checkboxes label span {
+  vertical-align: middle;
+}
 .parentDiv{
 	display: flex;
 	width:95%;
@@ -43,10 +60,10 @@ body {
 	margin-bottom:5px;
 	background-color: #85adad;
 	font-size: 40%;
-	font-family: "Lucida Console"
-	text-shadow: 3px 2px grey;
+	font-family: "Lucida Console";
 	padding-left: 5px;
-	width:90%
+	width:85%;
+	border-radius: 10px;
 }
 label{
 		vertical-align: middle;
@@ -97,16 +114,6 @@ h2 {
 	text-transform: uppercase;
 	color: #3E6392;
 }
-/*
-h2:before { 
-	content: ""; 
-	position:absolute; 
-	top: 50%; 
-	left: 0; 
-	width: 100%; 
-	border-bottom: 4px solid #3E6392; 
-}
-*/
 h2 span { 
 	position:relative; 
 	display: inline-block; 

@@ -10,26 +10,32 @@ var treePossiblePositions=[];
 var treeUsedPositions=[];
 
 var numerOfTrees=0;
-var season =0;
-var dayNight=0;
 
-var MAXIMUM_TREE_NUMBER=500;
-var TREE_MAX_AGE=400;
+
+var MAXIMUM_TREE_NUMBER=650;
+var TREE_MAX_AGE=600;
 var MOUVEMENT_SPEED=0.01;
 
 var userGrowingSpeed=5;
 var userTreeGrowProb=3;
 var userTreeHeight=10;
+var userNPR=false;
+var userAutomaticSeason=false;
+var userSeason =0;
+var userDayNight=0;
 
 var texColorTab = new Array();
 
 /*Matrix Tools*/
-//var yZoom=0;
 var yZoom=-5.5;
 var zRotation = 300.0;
 var xTranslate=-0.5;
 var zTranslate=0.6;
 var xRotation =0.0;
+
+var actualSeason=0;
+var actualDayNight=0;
+
 
 
 var evolutionCycle = setInterval(function(){lifeCycle()}, 2000/this.userGrowingSpeed);
@@ -45,26 +51,63 @@ function updateTreeHeight(valHeight) {
 function updateProbability(valProb) {
           this.userTreeGrowProb=valProb; 
         }
+function checkNPR()
+{
+	
+}
+function checkSeason()
+{
+	
+}
+function checkAS()
+{
+	if(document.getElementById("AS").checked ==true)
+	{
+		document.getElementById("NPR").checked =false;
+		document.getElementById("NPR").disabled =true;
+		document.getElementById("winter").disabled =false;
+		document.getElementById("spring").disabled =false;
+		document.getElementById("autumn").disabled =false;
+		document.getElementById("summer").disabled =false;
+		userAutomaticSeason=true;
+		userNPR=false;
+	}
+	else
+	{
+		document.getElementById("winter").disabled =true;
+		document.getElementById("spring").disabled =true;
+		document.getElementById("autumn").disabled =true;
+		document.getElementById("summer").disabled =true;
+		document.getElementById("winter").checked =false;
+		document.getElementById("spring").checked =false;
+		document.getElementById("autumn").checked =false;
+		document.getElementById("summer").checked =false;
+		document.getElementById("NPR").disabled =false;	
+		userAutomaticSeason=false;
+		userNPR=false;
+	}
+		
+
+}
 
 function lifeCycle()
 {
-	if(numerOfTrees<MAXIMUM_TREE_NUMBER)
+	if(this.numerOfTrees<MAXIMUM_TREE_NUMBER)
 	{
-		var pos= Math.floor(Math.random() * 500) + 1;
-		//console.log(treeUsedPositions);
+		var pos= Math.floor(Math.random() * 650) + 1;
 		
-		if(treeUsedPositions.includes(pos)==false)
+		if(this.treeUsedPositions.includes(pos)==false)
 		{
 			var positionProb = 0;
-			if(treeUsedPositions.includes(pos-1)&& treeUsedPositions.includes(pos+1))
+			if(this.treeUsedPositions.includes(pos-1)&& this.treeUsedPositions.includes(pos+1))
 			{
 				positionProb = 0.5;
 			}
-			else if(treeUsedPositions.includes(pos-1))
+			else if(this.treeUsedPositions.includes(pos-1))
 			{
 				positionProb = 0.25;
 			}
-			else if(treeUsedPositions.includes(pos+1))
+			else if(this.treeUsedPositions.includes(pos+1))
 			{
 				positionProb = 0.25;
 			}
@@ -76,36 +119,36 @@ function lifeCycle()
 			var finalProb = randFactorProb+positionProb+(userTreeGrowProb/10);
 			if(finalProb<0.9)
 			{
-				trees.push(new Tree());
+				this.trees.push(new Tree());
 				var leafy = Math.random();
 				var coniferous = Math.random();
 				if(leafy>coniferous)
 				{
-					trees[numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,1,this.userTreeHeight);
+					this.trees[this.numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,1,this.userTreeHeight);
 				}
 				else
 				{
-					trees[numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,0,this.userTreeHeight);
+					this.trees[this.numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,0,this.userTreeHeight);
 				}
 				
-				trees[numerOfTrees].setID(pos);
-				trees[numerOfTrees].setMaxAge(TREE_MAX_AGE);
-				numerOfTrees++;
-				treeUsedPositions.push(pos);
+				this.trees[this.numerOfTrees].setID(pos);
+				this.trees[this.numerOfTrees].setMaxAge(TREE_MAX_AGE);
+				this.numerOfTrees++;
+				this.treeUsedPositions.push(pos);
 			}	
 		}
-		for(var i=0;i<numerOfTrees;i++)
+		for(var i=0;i<this.numerOfTrees;i++)
 		{
 			if(trees[i].getAge()>=TREE_MAX_AGE)
 			{
-				treeUsedPositions=treeUsedPositions.filter(function(e) { return e !== trees[i].getID()});
-				trees.splice(i,1);
+				this.treeUsedPositions=this.treeUsedPositions.filter(function(e) { return e !== trees[i].getID()});
+				this.trees.splice(i,1);
 				i--;
-				numerOfTrees--;
+				this.numerOfTrees--;
 			}
 			else
 			{
-				trees[i].incAge();
+				this.trees[i].incAge();
 			}
 		}
 	}
@@ -113,6 +156,23 @@ function lifeCycle()
 	{
 		clearInterval(evolutionCycle);
 	}
+	/*this.actualDayNight++;
+	if(this.actualDayNight<30)
+	{
+		//setDay
+	}
+	if(this.actualDayNight<60&& this.actualDayNight>30)
+	{
+		//setNight
+	}
+	if(this.actualDayNight==60)
+	{
+		this.actualDayNight=0;
+		this.actualSeason++;
+		
+	}*/
+	
+	
 	
 }
 
@@ -120,46 +180,46 @@ window.onkeydown = checkKey;
         function checkKey(ev) {
             switch (ev.keyCode) {
                 case 87:
-					if(yZoom-MOUVEMENT_SPEED<-4.85 && yZoom-MOUVEMENT_SPEED>-5.7)
+					if(this.yZoom-this.MOUVEMENT_SPEED<-4.85 && this.yZoom-this.MOUVEMENT_SPEED>-5.7)
 					{
-						yZoom-=MOUVEMENT_SPEED;
+						this.yZoom-=this.MOUVEMENT_SPEED;
 					}
                     break;
                 case 83:
-                    if(yZoom+MOUVEMENT_SPEED<-4.85 && yZoom+MOUVEMENT_SPEED>-5.7)
+                    if(this.yZoom+this.MOUVEMENT_SPEED<-4.85 && this.yZoom+this.MOUVEMENT_SPEED>-5.7)
 					{
-						yZoom+=MOUVEMENT_SPEED;
+						this.yZoom+=this.MOUVEMENT_SPEED;
 					}
                     break;
 				case 68:
-					if(xTranslate-MOUVEMENT_SPEED<-0.08&& xTranslate-MOUVEMENT_SPEED > -0.9)
+					if(this.xTranslate-this.MOUVEMENT_SPEED<-0.08&& this.xTranslate-this.MOUVEMENT_SPEED > -0.9)
                     {
-						xTranslate-=MOUVEMENT_SPEED;
+						this.xTranslate-=this.MOUVEMENT_SPEED;
 					}			
                     break;
                 case 65:
-                    if(xTranslate+MOUVEMENT_SPEED<-0.08&& xTranslate+MOUVEMENT_SPEED > -0.9)
+                    if(this.xTranslate+this.MOUVEMENT_SPEED<-0.08&& this.xTranslate+this.MOUVEMENT_SPEED > -0.9)
                     {
-						xTranslate+=MOUVEMENT_SPEED;
+						this.xTranslate+=this.MOUVEMENT_SPEED;
 					}
                     break;
 				case 38:
-					if(zTranslate-MOUVEMENT_SPEED<0.67 && zTranslate-MOUVEMENT_SPEED>0.5)
+					if(this.zTranslate-this.MOUVEMENT_SPEED<0.67 && this.zTranslate-this.MOUVEMENT_SPEED>0.5)
 					{
-						zTranslate-=MOUVEMENT_SPEED;
+						this.zTranslate-=this.MOUVEMENT_SPEED;
 					}
                     break;
 				case 40:
-                    if(zTranslate+MOUVEMENT_SPEED<0.67 && zTranslate+MOUVEMENT_SPEED>0.5)
+                    if(this.zTranslate+this.MOUVEMENT_SPEED<0.67 && this.zTranslate+this.MOUVEMENT_SPEED>0.5)
 					{
-						zTranslate+=MOUVEMENT_SPEED;
+						this.zTranslate+=this.MOUVEMENT_SPEED;
 					}
 					break;
 				case 39:
-                    xRotation-=0.5;
+                    this.xRotation-=0.5;
 					break;
 				case 37:
-                    xRotation+=0.5;
+                    this.xRotation+=0.5;
                     break;
                 default:
 				//console.log(ev.keyCode);
@@ -197,15 +257,42 @@ function initScene()
     glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
     glContext.viewport(0, 0, c_width, c_height);
 	changeProjection();
-	initTextureWithImage( "js/texture/chess-field-4.png", texColorTab );
-	initTextureWithImage( "js/texture/sky_1.png", texColorTab );
+	
+	for(var i =1 ; i<5;i++)
+	{
+		initTextureWithImage( "js/texture/Field/chess-field-"+String(i)+".png", texColorTab );
+	}
+	
+	for(var i =1 ; i<5;i++)
+	{
+		initTextureWithImage( "js/texture/Sky/sky_"+String(i)+".png", texColorTab );
+	}
+	
 	for(var i=1; i<16; i++)
 	{
-		initTextureWithImage( "js/texture/tree_"+String(i)+".png", texColorTab );
+		initTextureWithImage( "js/texture/Coniferous/coniferous_summer_spring_autumn_"+String(i)+".png", texColorTab );
+	}
+	
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/Coniferous/coniferous_winter_"+String(i)+".png", texColorTab );
+	}
+	
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/Leafy/leafy_spring_"+String(i)+".png", texColorTab );
 	}
 	for(var i=1; i<16; i++)
 	{
-		initTextureWithImage( "js/texture/leafy_tree_"+String(i)+".png", texColorTab );
+		initTextureWithImage( "js/texture/Leafy/leafy_summer_"+String(i)+".png", texColorTab );
+	}
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/Leafy/leafy_autumn_"+String(i)+".png", texColorTab );
+	}
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/Leafy/leafy_winter_"+String(i)+".png", texColorTab );
 	}
 	renderLoop();
 }

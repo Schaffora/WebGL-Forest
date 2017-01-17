@@ -8,10 +8,17 @@ class Field{
 		
 		this.treePossibilityPoints = [];
 		this.MD_POINT_MAX_ITERATIONS=4;
-		this.DEPTH =7;
+		this.DEPTH =10;
+		this.HEIGHT_DIFFERENCE=2;
+		this.START_HILL_PROBABILITY=0.5;
 		
 		this.mvMatrix = mat4.create();
 		this.init();
+		this.season=0;
+	}
+	setSeason(newValue)
+	{
+		this.season=newValue;
 	}
 	init()
 	{	
@@ -23,7 +30,7 @@ class Field{
 
 		this.indicesOffset=0;	
 		
-		this.generateMidpoint(0.0,1.0,0.0, 1.0,1.0,0.0, 1.0,0.0,0.0, 0.0,0.0,0.0,0);	
+		this.generateMidpoint(0.0,1.0,0.0, 1.0,1.0,0.0, 1.0,0.0,0.0, 0.0,0.0,0.0,0,this.START_HILL_PROBABILITY);	
 		
 		this.vertexBuffer = getVertexBufferWithVertices(this.vertices);
 		this.textCoordsBuffer = getArrayBufferWithArray(this.textCoords);
@@ -35,18 +42,44 @@ class Field{
 		return this.treePossibilityPoints;
 	}
 	
-	generateMidpoint(Ax,Ay,Az,Bx,By,Bz,Cx,Cy,Cz,Dx,Dy,Dz,iterations){
-		
+	generateMidpoint(Ax,Ay,Az,Bx,By,Bz,Cx,Cy,Cz,Dx,Dy,Dz,iterations, hillProbability){
+			
+			var Ez=0;
 			var Ex=Ax+(Cx-Ax)/2.0;
 			var Ey=Cy+(Ay-Cy)/2.0;
-			if(Az>0.015 && Az <0.03)
+			
+			if(hillProbability>0.5&&hillProbability<0.75)
 			{
-				var Ez=Az+0.01;
+				var Ez=Az+(this.DEPTH/10000);
+				hillProbability=hillProbability-0.5;
+
+			}
+			else if(hillProbability>0.25&&hillProbability<0.5)
+			{
+				var Ez=Az;
+				hillProbability=hillProbability-0.5;
+			}
+			else if(hillProbability>0.0&&hillProbability<0.25)
+			{
+				if(Math.random()>0.5)
+				{
+					var Ez=Az+(this.DEPTH/10000)-(Math.random()/10000);
+				}
+				else
+				{
+					var Ez=Az-(this.DEPTH/10000)-(Math.random()/10000);
+				}
+				
+				hillProbability=hillProbability-0.1;
 			}
 			else
 			{
-				var Ez=Math.random()*Math.random()*(this.DEPTH/1000)*3+0.015;
+				var Ez=Az+this.DEPTH/1000+(this.HEIGHT_DIFFERENCE/1000)+(Math.random()/10000);
+				hillProbability=hillProbability-0.5;
 			}
+			
+			hillProbability=Math.random()+hillProbability/2;
+				
 
 			var Fx=Ax+((Bx-Ax)/2.0);
 			var Fy= By;
@@ -70,10 +103,10 @@ class Field{
 			}	
 			if (iterations < this.MD_POINT_MAX_ITERATIONS) {	
 				iterations=iterations+1;
-				this.generateMidpoint(Ax,Ay,Az,Fx,Fy,Fz,Ex,Ey,Ez,Ix,Iy,Iz,iterations);
-				this.generateMidpoint(Fx,Fy,Fz,Bx,By,Bz,Gx,Gy,Gz, Ex,Ey,Ez,iterations);
-				this.generateMidpoint(Ex,Ey,Ez,Gx,Gy,Gz,Cx,Cy,Cz,Hx,Hy,Hz,iterations);
-				this.generateMidpoint(Ix,Iy,Iz,Ex,Ey,Ez,Hx,Hy,Hz,Dx,Dy,Dz,iterations);				
+				this.generateMidpoint(Ax,Ay,Az,Fx,Fy,Fz,Ex,Ey,Ez,Ix,Iy,Iz,iterations,hillProbability);
+				this.generateMidpoint(Fx,Fy,Fz,Bx,By,Bz,Gx,Gy,Gz, Ex,Ey,Ez,iterations,hillProbability);
+				this.generateMidpoint(Ex,Ey,Ez,Gx,Gy,Gz,Cx,Cy,Cz,Hx,Hy,Hz,iterations,hillProbability);
+				this.generateMidpoint(Ix,Iy,Iz,Ex,Ey,Ez,Hx,Hy,Hz,Dx,Dy,Dz,iterations,hillProbability);				
 			}
 
 		}
@@ -111,6 +144,7 @@ class Field{
 				
 				this.treePossibilityPoints.push({ x: Ex, y: Ey ,z: Ez});
 				this.treePossibilityPoints.push({ x: Bx, y: By ,z: Bz});
+				this.treePossibilityPoints.push({ x: Dx, y: Dy ,z: Dz});
 		}
 	
 		
@@ -136,7 +170,7 @@ class Field{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
 		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
 		glContext.activeTexture(glContext.TEXTURE0);		
-	    glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[0]);
+	    glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[this.season]);
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	}
 	

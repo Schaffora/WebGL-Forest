@@ -64,14 +64,45 @@
 			
 			<div class="rightFormDiv">
 				<div class="customForm">
-					<p align="center"><b>Forest Propreties</b></p>
+				<br>
+					<div class="title">
+						<p align="center"><b>Forest Propreties</b></p><br>
+					</div>
 					<form>
 					<label for="speed">Tree growing speed</label>
 					<input class="customSlider" type="range" value="5" min="1" max="10" steps="1" id="speed" onchange="updateTextInput(this.value);" ></br>
 					<label for="growingProb">Tree growing probability</label>
 					<input class="customSlider" type="range" value="3" min="0" max="5" steps="1" id="growingProb" onchange="updateProbability(this.value);" ></br>
 					<label for="treeHeight">Tree minimum height</label>
-					<input class="customSlider" type="range" value="10" min="5" max="30" steps="1" id="treeHeight" onchange="updateTreeHeight(this.value);" ></br>
+					<input class="customSlider" type="range" value="10" min="5" max="30" steps="1" id="treeHeight" onchange="updateTreeHeight(this.value);" ></br><br><br>
+					<div class="checkboxes">
+						<label for="NPR">NPR Trees</label>
+						<input type="checkbox" id="NPR" name="NPRCheck" onchange="checkNPR();"><br>
+						<label for="AS">Automatic season</label>
+						<input type="checkbox" id="AS" name="ASCheck" onchange="checkAS();"><br>
+						
+						<div class="seasons">
+							<ul>
+								<li>
+									<label for="winter"><i>Winter</i></label>
+									<input type="radio" id="winter" name="season" onchange="checkSeason();" disabled="disabled"><br>
+								</li>
+								<li>
+									<label for="summer"><i>Summer</i></label>
+									<input type="radio" id="summer" name="season" onchange="checkSeason();" disabled="disabled" ><br>
+								</li>
+								<li>
+									<label for="spring"><i>Spring</i></label>
+									<input type="radio" id="spring" name="season" onchange="checkSeason();" disabled="disabled" ><br>
+								</li>
+								<li>
+									<label for="autumn"><i>Autumn</i></label>
+									<input type="radio" id="autumn" name="season" onchange="checkSeason();" disabled="disabled" ><br>
+								</li>
+							</ul>
+						</div>
+						
+					</div>
 					</form>
 				</div>	
 			</div>

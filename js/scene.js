@@ -33,8 +33,11 @@ var xTranslate=-0.5;
 var zTranslate=0.6;
 var xRotation =0.0;
 
-var actualSeason=0;
+
+var seasonCpt=0;
+var dayNightCpt=0;
 var actualDayNight=0;
+var actualSeason=0;
 
 
 
@@ -57,7 +60,22 @@ function checkNPR()
 }
 function checkSeason()
 {
-	
+	if(document.getElementById("winter").checked ==true)
+	{
+		this.actualSeason=3;
+	}
+	if(document.getElementById("autumn").checked ==true)
+	{
+		this.actualSeason=2;
+	}
+	if(document.getElementById("summer").checked ==true)
+	{
+		this.actualSeason=1;
+	}
+	if(document.getElementById("spring").checked ==true)
+	{
+		this.actualSeason=0;
+	}
 }
 function checkAS()
 {
@@ -156,23 +174,44 @@ function lifeCycle()
 	{
 		clearInterval(evolutionCycle);
 	}
-	/*this.actualDayNight++;
-	if(this.actualDayNight<30)
+	document.getElementById("NumberOfTrees").innerHTML = String(this.numerOfTrees);
+	if(this.userAutomaticSeason==false)
 	{
-		//setDay
+		this.dayNightCpt++;
+		if(this.dayNightCpt<30)
+		{
+			actualDayNight=0;
+		}
+		if(this.dayNightCpt<60&& this.dayNightCpt>30)
+		{
+			actualDayNight=1;
+		}
+		if(this.dayNightCpt==60)
+		{
+			this.dayNightCpt=0;
+			this.seasonCpt++;	
+		}
+		if(this.seasonCpt<10)
+		{
+			this.actualSeason=0;
+		}
+		if(this.seasonCpt>=10&& this.seasonCpt<20)
+		{
+			this.actualSeason=1;
+		}
+		if(this.seasonCpt>=20&& this.seasonCpt<30)
+		{
+			this.actualSeason=2;
+		}
+		if(this.seasonCpt>=30&& this.seasonCpt<40)
+		{
+			this.actualSeason=3;
+		}
+		if(this.seasonCpt==40)
+		{
+			this.seasonCpt=0;
+		}
 	}
-	if(this.actualDayNight<60&& this.actualDayNight>30)
-	{
-		//setNight
-	}
-	if(this.actualDayNight==60)
-	{
-		this.actualDayNight=0;
-		this.actualSeason++;
-		
-	}*/
-	
-	
 	
 }
 
@@ -309,19 +348,24 @@ function drawScene()
 	mat4.translate(mvMatrix, mvMatrix, [xTranslate, 0,0]);
 	mat4.translate(mvMatrix, mvMatrix, [0,0,zTranslate]);
 	
+	skyBox[0].setSeason(this.actualSeason);
+	skyBox[0].setDayNight(this.actualDayNight);
 	skyBox[0].initDraw(texColorTab);
 	skyBox[0].drawAt(mvMatrix,0.0,0.0,-5.0);
 	skyBox[0].drawAt(mvMatrix,1.0,0.0,-5.0);
 	
+	skyBox[1].setSeason(this.actualSeason);
+	skyBox[1].setDayNight(this.actualDayNight);
 	skyBox[1].initDraw(texColorTab);
 	skyBox[1].drawAt(mvMatrix,0.0,0.0,-5.0);
 	skyBox[1].drawAt(mvMatrix,0.003,-0.16,-4.0);
 	
-	
+	fields[0].setSeason(this.actualSeason);
 	fields[0].initDraw(texColorTab);
 	fields[0].drawAt(mvMatrix,0.0,0.0,-5.0);
 	
 	for(var i=0;i<numerOfTrees;i++){
+		trees[i].setSeason(this.actualSeason);
 		trees[i].initDraw(texColorTab);
 		trees[i].drawAt(mvMatrix,0.0,0.0,-5.0);
 	}

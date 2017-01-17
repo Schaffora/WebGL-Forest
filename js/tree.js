@@ -118,7 +118,7 @@ class Tree{
 			{
 				this.setTexture(8);
 			}
-			else
+			if(this.season==4)
 			{
 				setTexture(23);
 			}
@@ -156,7 +156,6 @@ class Tree{
 			if(this.age>(i*evolutionStep) && this.age<=(i+1)*evolutionStep)
 			{
 				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[i+index]);
-				console.log(i+index);
 			}
 		}
 		

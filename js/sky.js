@@ -16,6 +16,10 @@ class Sky{
 	{
 		this.season=newValue;
 	}
+	setDayNight(dnewValue)
+	{
+		this.dayNight=dnewValue;
+	}
 	init()
 	{	
 	
@@ -85,7 +89,7 @@ class Sky{
 			{
 				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[4]);
 			}
-			else
+			if(this.season==3)
 			{
 				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[6]);
 			}
@@ -96,7 +100,7 @@ class Sky{
 			{
 				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[5]);
 			}
-			else
+			if(this.season==3)
 			{
 				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[7]);
 			}

@@ -56,25 +56,36 @@ function updateProbability(valProb) {
         }
 function checkNPR()
 {
-	
+	if(document.getElementById("NPR").checked ==true)
+	{
+		this.userNPR=true;
+	}
+	else
+	{
+		this.userNPR=false;
+	}
 }
 function checkSeason()
 {
 	if(document.getElementById("winter").checked ==true)
 	{
 		this.actualSeason=3;
+		document.getElementById("ActualSeason").innerHTML = "Winter";
 	}
 	if(document.getElementById("autumn").checked ==true)
 	{
 		this.actualSeason=2;
+		document.getElementById("ActualSeason").innerHTML = "Autumn";
 	}
 	if(document.getElementById("summer").checked ==true)
 	{
 		this.actualSeason=1;
+		document.getElementById("ActualSeason").innerHTML = "Summer";
 	}
 	if(document.getElementById("spring").checked ==true)
 	{
 		this.actualSeason=0;
+		document.getElementById("ActualSeason").innerHTML = "Spring";
 	}
 }
 function checkAS()
@@ -87,8 +98,8 @@ function checkAS()
 		document.getElementById("spring").disabled =false;
 		document.getElementById("autumn").disabled =false;
 		document.getElementById("summer").disabled =false;
-		userAutomaticSeason=true;
-		userNPR=false;
+		this.userAutomaticSeason=true;
+		this.userNPR=false;
 	}
 	else
 	{
@@ -101,8 +112,8 @@ function checkAS()
 		document.getElementById("autumn").checked =false;
 		document.getElementById("summer").checked =false;
 		document.getElementById("NPR").disabled =false;	
-		userAutomaticSeason=false;
-		userNPR=false;
+		this.userAutomaticSeason=false;
+		this.userNPR=false;
 	}
 		
 
@@ -127,6 +138,7 @@ function lifeCycle()
 			}
 			else if(this.treeUsedPositions.includes(pos+1))
 			{
+				positionProb = 0.25;
 				positionProb = 0.25;
 			}
 			else
@@ -181,10 +193,12 @@ function lifeCycle()
 		if(this.dayNightCpt<30)
 		{
 			actualDayNight=0;
+			document.getElementById("DayOrNight").innerHTML = "Day";
 		}
 		if(this.dayNightCpt<60&& this.dayNightCpt>30)
 		{
 			actualDayNight=1;
+			document.getElementById("DayOrNight").innerHTML = "Night";
 		}
 		if(this.dayNightCpt==60)
 		{
@@ -194,18 +208,22 @@ function lifeCycle()
 		if(this.seasonCpt<10)
 		{
 			this.actualSeason=0;
+			document.getElementById("ActualSeason").innerHTML = "Spring";
 		}
 		if(this.seasonCpt>=10&& this.seasonCpt<20)
 		{
 			this.actualSeason=1;
+			document.getElementById("ActualSeason").innerHTML = "Summer";
 		}
 		if(this.seasonCpt>=20&& this.seasonCpt<30)
 		{
 			this.actualSeason=2;
+			document.getElementById("ActualSeason").innerHTML = "Autumn";
 		}
 		if(this.seasonCpt>=30&& this.seasonCpt<40)
 		{
 			this.actualSeason=3;
+			document.getElementById("ActualSeason").innerHTML = "Winter";
 		}
 		if(this.seasonCpt==40)
 		{
@@ -333,6 +351,18 @@ function initScene()
 	{
 		initTextureWithImage( "js/texture/Leafy/leafy_winter_"+String(i)+".png", texColorTab );
 	}
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/NPR/npr_coniferous_"+String(i)+".png", texColorTab );
+	}
+	for(var i=1; i<16; i++)
+	{
+		initTextureWithImage( "js/texture/NPR/npr_leafy_tree_"+String(i)+".png", texColorTab );
+	}
+	for(var i =5 ; i<9;i++)
+	{
+		initTextureWithImage( "js/texture/Field/chess-field-"+String(i)+".png", texColorTab );
+	}
 	renderLoop();
 }
 
@@ -359,12 +389,13 @@ function drawScene()
 	skyBox[1].initDraw(texColorTab);
 	skyBox[1].drawAt(mvMatrix,0.0,0.0,-5.0);
 	skyBox[1].drawAt(mvMatrix,0.003,-0.16,-4.0);
-	
+	fields[0].setNPR(this.userNPR);
 	fields[0].setSeason(this.actualSeason);
 	fields[0].initDraw(texColorTab);
 	fields[0].drawAt(mvMatrix,0.0,0.0,-5.0);
 	
 	for(var i=0;i<numerOfTrees;i++){
+		trees[i].setNPR(this.userNPR);
 		trees[i].setSeason(this.actualSeason);
 		trees[i].initDraw(texColorTab);
 		trees[i].drawAt(mvMatrix,0.0,0.0,-5.0);

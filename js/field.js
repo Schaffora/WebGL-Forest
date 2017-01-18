@@ -15,6 +15,11 @@ class Field{
 		this.mvMatrix = mat4.create();
 		this.init();
 		this.season=0;
+		this.NPR=false;
+	}
+	setNPR(newNPR)
+	{
+		this.NPR=newNPR;
 	}
 	setSeason(newValue)
 	{
@@ -170,7 +175,15 @@ class Field{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
 		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
 		glContext.activeTexture(glContext.TEXTURE0);		
-	    glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[this.season]);
+		if(this.NPR==false)
+		{
+			glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[this.season]);
+		}
+		else
+		{
+			glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[(128+this.season)]);
+		}
+	    
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 	}
 	

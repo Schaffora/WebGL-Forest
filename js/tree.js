@@ -15,6 +15,7 @@ class Tree{
 			this.maxAge=0;
 			this.type=0;
 			this.season=0;
+			this.NPR=false;
 
 	}
 	init()
@@ -23,6 +24,10 @@ class Tree{
 		this.indices = [];
 		this.vertices = [];
 		this.textCoords =[];
+	}
+	setNPR(newNPR)
+	{
+		this.NPR=newNPR;
 	}
 	setSeason(newValue)
 	{
@@ -112,36 +117,51 @@ class Tree{
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.textCoordsBuffer);
 		glContext.vertexAttribPointer(prg.textureCoordsAttribute, 2, glContext.FLOAT, false, 0, 0);
 		glContext.activeTexture(glContext.TEXTURE0);
-		if(this.type==0)
+		if(this.NPR==false)
 		{
-			if(this.season==0 || this.season==1 ||this.season==2)
+			if(this.type==0)
 			{
-				this.setTexture(8);
+				if(this.season==0 || this.season==1 ||this.season==2)
+				{
+					this.setTexture(8);
+				}
+				if(this.season==4)
+				{
+					setTexture(23);
+				}
 			}
-			if(this.season==4)
+			else
 			{
-				setTexture(23);
+				if(this.season==0)
+				{
+					this.setTexture(38);
+				}
+				if(this.season==1)
+				{
+					this.setTexture(53);
+				}
+				if(this.season==2)
+				{
+					this.setTexture(68);
+				}
+				if(this.season==3)
+				{
+					this.setTexture(83);
+				}
 			}
 		}
 		else
 		{
-			if(this.season==0)
+			if(this.type==0)
 			{
-				this.setTexture(38);
+				this.setTexture(98);
 			}
-			if(this.season==1)
+			if(this.type==1)
 			{
-				this.setTexture(53);
-			}
-			if(this.season==2)
-			{
-				this.setTexture(68);
-			}
-			if(this.season==3)
-			{
-				this.setTexture(83);
+				this.setTexture(113);
 			}
 		}
+		
 		
 		
 	   		
@@ -151,7 +171,7 @@ class Tree{
 	{
 		var evolutionStep= this.maxAge/15;
 		
-		for(var i=1;i<13;i++)
+		for(var i=1;i<14;i++)
 		{
 			if(this.age>(i*evolutionStep) && this.age<=(i+1)*evolutionStep)
 			{
@@ -159,7 +179,7 @@ class Tree{
 			}
 		}
 		
-		if(this.age<1*evolutionStep)
+		if(this.age<=1*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[index]);
 		}

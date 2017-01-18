@@ -78,7 +78,7 @@
 					<div class="checkboxes">
 						<label for="NPR">NPR Trees</label>
 						<input type="checkbox" id="NPR" name="NPRCheck" onchange="checkNPR();"><br>
-						<label for="AS">Automatic season</label>
+						<label for="AS">Manual season</label>
 						<input type="checkbox" id="AS" name="ASCheck" onchange="checkAS();"><br>
 						
 						<div class="seasons">
@@ -109,9 +109,11 @@
 		</div>
 		
 		<div class="bottomFormDiv">
-			<p id="NumberOfTrees"> We have actually: 0 trees </p>
-
-			<p>More Options</p>
+		<div class="customForm">
+			We have actually: <span id="NumberOfTrees"> </span> trees <br>
+			It's actually: <span id="DayOrNight"></span><br>
+			We are actually in: <span id="ActualSeason"></span><br>
+		</div>
 		</div>
 	</body>
 </html>

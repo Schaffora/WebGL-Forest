@@ -34,10 +34,10 @@ var zTranslate=0.6;
 var xRotation =0.0;
 
 
-var seasonCpt=0;
+var seasonCpt=11;
 var dayNightCpt=0;
-var actualDayNight=0;
-var actualSeason=0;
+var actualDayNight=null;
+var actualSeason=null;
 
 
 
@@ -145,14 +145,13 @@ function lifeCycle()
 			{
 				positionProb = 0;
 			}
+			
 			var randFactorProb = Math.random();
 			var finalProb = randFactorProb+positionProb+(userTreeGrowProb/10);
 			if(finalProb<0.9)
 			{
 				this.trees.push(new Tree());
-				var leafy = Math.random();
-				var coniferous = Math.random();
-				if(leafy>coniferous)
+				if(Math.random()>0.5)
 				{
 					this.trees[this.numerOfTrees].createTree(treePossiblePositions[pos].x,treePossiblePositions[pos].y,treePossiblePositions[pos].z-0.005,1,this.userTreeHeight);
 				}

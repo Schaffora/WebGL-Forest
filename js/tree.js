@@ -33,6 +33,10 @@ class Tree{
 	{
 		this.season=newValue;
 	}
+	getType()
+	{
+		return this.type;
+	}
 	getID()
 	{
 		return this.ID;
@@ -125,9 +129,9 @@ class Tree{
 				{
 					this.setTexture(8);
 				}
-				if(this.season==4)
+				if(this.season==3)
 				{
-					setTexture(23);
+					this.setTexture(23);
 				}
 			}
 			else
@@ -178,7 +182,6 @@ class Tree{
 				glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[i+index]);
 			}
 		}
-		
 		if(this.age<=1*evolutionStep)
 		{
 		glContext.bindTexture(glContext.TEXTURE_2D, texColorTab[index]);
